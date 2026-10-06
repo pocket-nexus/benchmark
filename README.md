@@ -3,7 +3,7 @@
 PocketJS 的 benchmark 仓库。被测物是 `vendor/pocketjs`（git submodule，钉 commit）。三台 host 各管一件事：
 
 - **sim / wasm oracle**（`harness/oracle.ts`，Bun + wasm）：语义权威，产出每个 action 的 DrawList hash 与 framebuffer hash；不计时。
-- **CI host 上的 bench shell**（`shell/`，C）：设备同谱系的 QuickJS（`pocket-stack/quickjs-rs`）+ `pocketjs-core` + 软件光栅，按 `eval / js / jobs / tick / draw / render` 六段记线程 CPU 时间；同一 bundle 的 hash 与 oracle 并排记录。
+- **CI host 上的 bench shell**（`shell/`，C）：设备同谱系的 QuickJS（`pocket-nexus/quickjs-rs`）+ `pocketjs-core` + 软件光栅，按 `eval / js / jobs / tick / draw / render` 六段记线程 CPU 时间；同一 bundle 的 hash 与 oracle 并排记录。
 - **QEMU + SO3 virt32 / virt64**（`ref/`、`plugin/`）：只算指令数，按 workload × PC 段 × 阶段 × 帧归属；两台参考机均已跑通全部 10 条 neutral tape。
 
 没有墙钟：运行时内部一切按虚拟帧；`Date.now()` 由 shell 给虚拟时间。设计与里程碑见 `docs/PLAN.md`，case 协议见 `docs/PROTOCOL.md`，shell 命令行见 `docs/SHELL.md`。
@@ -27,7 +27,7 @@ bun run test                               # spec / harness / corpus / plugin / 
 ```
 
 `vendor/pocketjs` 当前指向 HalfSweet/pocketjs 的公开 `feat/soft-host` 分支；其中包含
-`hosts/soft/` 与 bench hook。相关改动合并上游后再把 submodule URL 切回 pocket-stack。
+`hosts/soft/` 与 bench hook。相关改动合并上游后再把 submodule URL 切回 pocket-nexus。
 
 ## 目录
 
